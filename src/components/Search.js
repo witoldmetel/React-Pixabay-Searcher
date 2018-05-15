@@ -31,7 +31,7 @@ export default class componentName extends Component {
     onAmountChange = (e, index, value) => this.setState({amount: value})
 
     render() {
-        console.log(this.state.images);
+        // console.log(this.state.images);
         return (
         <div>
             <TextField
@@ -54,6 +54,7 @@ export default class componentName extends Component {
                 <MenuItem value={35} primaryText="35" />
                 <MenuItem value={50} primaryText="50" />
             </SelectField>
+            {this.state.images.length > 0 ? (<ImageResults images={this.state.images}/>) : null}
         </div>
         )
     }
