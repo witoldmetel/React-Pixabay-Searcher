@@ -1,13 +1,23 @@
 <?php
-abstract class className{
-    protected function connetDB() {
+class className{
+    private $connection;
+
+    public function __construct() {
         try {
-            $connection = new PDO("mysql:host=localhost;dbname=react-database","root","");
-            return $connection;
+            $this->connection = new PDO("mysql:host=localhost;dbname=react-database","root","");
         }
         catch (PDOException $error) {
             echo $error -> getMessage();
         }
+        return $this->connection;
     }
+
+    public function getDB()
+        {
+        if ($this->connection instanceof PDO)
+            {
+            return $this->connection;
+            }
+        }
 }
 ?>

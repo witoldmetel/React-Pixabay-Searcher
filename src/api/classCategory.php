@@ -2,8 +2,18 @@
 include("className.php");
 
 class classCategory extends className{
-    public function displayData() {
-        $BFetch = $this -> connectDB() -> prepare("SELECT * FROM images");
+    private $connection;
+
+    public
+
+    function __construct()
+        {
+        $this->connection = new className();
+        $this->connection = $this->connection->getDB();
+        }
+
+    function displayData() {
+        $BFetch = $this->connection -> prepare("SELECT * FROM images");
         $BFetch -> execute();
 
         $J = [];
