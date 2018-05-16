@@ -1,5 +1,6 @@
 <?php
-class DB_Config{
+
+class DB{
     private $connection;
 
     public function __construct() {
@@ -8,6 +9,7 @@ class DB_Config{
         }
         catch (PDOException $error) {
             echo $error -> getMessage();
+            exit("Database error");
         }
         return $this->connection;
     }

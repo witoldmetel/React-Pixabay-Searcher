@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 
 export default class DBResults extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        this.state = (
-            {
-                db: []
+        this.state = {
+                db: [],
+                id:'',
+                name:'',
+                category:''
             }
-        );
+    }
+
+    componentDidMount() {
         this.displayData();
     }
 
@@ -19,15 +23,47 @@ export default class DBResults extends Component {
                 this.setState({
                     db: resJSON
                 });
-                console.log(this.state.db);
             })
     }
 
+    addDataToDB(e) {
+        e.preventDefault();
+        console.log("Add data");
+
+        const { id, name, category } = this.state;
+
+        fetch('http://localhost/React-searcher-pixabay/src/api/DB_Add.php', {
+			method: 'post',
+			header:{
+				// 'Accept': 'application/json',
+				// 'Content-type': 'application/json'
+			},
+			body:JSON.stringify({
+				id: id,
+				name: name,
+				category: category,
+			})
+
+		})
+		.then(res => res.json())
+			.then(resJSON =>{
+				console.log(resJSON);
+			})
+			.catch(error => console.error(error));
+    }
+
     render() {
+        console.log(this.state.db);
         return (
-        <div>
-            works smomething?
-        </div>
+            <div>
+                {this.state.db.map(row => {
+                    return (
+                            <div key={row.Id}>{row.Name}</div>
+                        )
+                    }
+                )}
+            </div>
+
         )
     }
 }

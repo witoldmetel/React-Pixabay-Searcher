@@ -1,37 +1,37 @@
 <?php
-include("DB_Config.php");
+include("DB.php");
 
-class DB_Connect extends DB_Config{
+class DB_Connect extends DB{
     private $connection;
 
     public
 
     function __construct()
         {
-        $this->connection = new DB_Config();
-        $this->connection = $this->connection->getDB();
+            $this->connection = new DB();
+            $this->connection = $this->connection->getDB();
         }
 
     function displayData() {
         $BFetch = $this->connection -> prepare("SELECT * FROM images");
         $BFetch -> execute();
 
-        $J = [];
-        $I = 0;
+        $Data = [];
+        $Index = 0;
 
         while($Fetch=$BFetch->fetch(PDO::FETCH_ASSOC)) {
-            $J[$I] = [
+            $Data[$Index] = [
                 "Id" => $Fetch['Id'],
                 "Name" => $Fetch['Name'],
                 "Category" => $Fetch['Category']
             ];
 
-            $I++;
+            $Index++;
         }
 
         header("Access-Control-Allow-Origin:*");
         header("Content-type: application/json");
-        echo json_encode($J);
+        echo json_encode($Data);
     }
 }
 ?>
