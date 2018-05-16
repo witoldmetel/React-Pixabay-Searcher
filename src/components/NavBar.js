@@ -15,7 +15,7 @@ const rightButtons = (
             href='/'
             label="Home"
             style={buttonStyle} />
-        <FlatButton label="About" style={buttonStyle} />
+        <FlatButton href="/dbresults" label="Favourites" style={buttonStyle}/>
         <FlatButton
             href="https://github.com/witoldmetel/React-searcher-pixabay"
             target="_blank"
