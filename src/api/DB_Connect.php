@@ -1,14 +1,14 @@
 <?php
-include("className.php");
+include("DB_Config.php");
 
-class classCategory extends className{
+class DB_Connect extends DB_Config{
     private $connection;
 
     public
 
     function __construct()
         {
-        $this->connection = new className();
+        $this->connection = new DB_Config();
         $this->connection = $this->connection->getDB();
         }
 
