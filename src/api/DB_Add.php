@@ -1,29 +1,44 @@
 <?php
-include("DB.php");
+ 
+	// Importing DBConfig.php file.
+	include 'DB_Config.php';
 
-class DB_Add extends DB{
-    private $connection;
+	// Creating connection.
+	 $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
+	 
+	 // Getting the received JSON into $json variable.
+	 $json = file_get_contents('php://input');
+	 
+	 // decoding the received JSON and store into $obj variable.
+	 $obj = json_decode($json,true);
 
-    public
+	$Id_image = $obj['Id_image'];
+	$Name_image = $obj['Name_image'];
+    $Category_image = $obj['Category_image'];
+    $img_url = $obj['img_url'];
 
-    function __construct()
-        {
-            $this->connection = new DB();
-            $this->connection = $this->connection->getDB();
-        }
+	 // Creating SQL query and insert the record into MySQL database table.
+	$Sql_Query = "insert into images (Id_image,Name_image,Category_image,img_url) values ('$Id_image','$Name_image','$Category_image','$img_url')";
+	 
+ 
+	 if(mysqli_query($con,$Sql_Query)){
 
-    function addDataToDB() {
-        $query = "INSERT INTO images(Id, Name, Category) VALUES (:id, :name, :category)";
-        $this->connection->exec($query);
-
-
-    }
-
-}
-    header("Access-Control-Allow-Origin:*");
-    header("Content-type: application/json");
-    echo json_encode($this->connection);
-
-    $DB_Add = new DB_Add();
-    $DB_Add -> addDataToDB();
+			 // If the record inserted successfully then show the message as response. 
+			$MSG = 'Product Successfully Inserted into MySQL Database' ;
+			 
+			// Converting the message into JSON format.
+			$json = json_encode($MSG);
+			 
+			// Echo the message on screen.
+			// We would also show this message on our app.
+			 echo $json ;
+	 
+	 }
+	 else{
+	 
+			echo 'Something Went Wrong';
+	 
+	 }
+	mysqli_close($con);
+	
 ?>
