@@ -2,7 +2,7 @@
 
 ## App Info
 
-Pixabay finder images in React / Material UI
+Pixabay finder images in React / Material UI / PHP / MySQL
 
 ## Quick Start
 

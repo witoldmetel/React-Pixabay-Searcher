@@ -1,5 +1,5 @@
 <?php
-include("classCategory.php");
-$Category = new classCategory();
-$Category -> displayData();
+include("DB_Connect.php");
+$DB_Connect = new DB_Connect();
+$DB_Connect -> displayData();
 ?>
