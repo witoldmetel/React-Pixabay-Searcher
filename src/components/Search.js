@@ -34,7 +34,8 @@ export default class componentName extends Component {
         // console.log(this.state.images);
         return (
         <div>
-            <TextField
+            <div className="searcher-container">
+                <TextField
                 name="searchText"
                 value={this.state.searchText}
                 onChange={this.onTextChange}
@@ -54,6 +55,8 @@ export default class componentName extends Component {
                 <MenuItem value={35} primaryText="35" />
                 <MenuItem value={50} primaryText="50" />
             </SelectField>
+            </div>
+
             {this.state.images.length > 0 ? (<ImageResults images={this.state.images}/>) : null}
         </div>
         )

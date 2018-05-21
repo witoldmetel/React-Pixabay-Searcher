@@ -1,27 +1,7 @@
 import React, { Component } from 'react'
 
 export default class DBResults extends Component {
-<<<<<<< HEAD
-    constructor() {
-        super();
 
-        this.state = (
-            {
-                db: []
-            }
-        );
-    }
-
-    displayData() {
-        fetch("")
-    }
-
-    render() {
-        return (
-        <div>
-
-        </div>
-=======
     constructor(props) {
         super(props);
 
@@ -84,8 +64,6 @@ export default class DBResults extends Component {
                     }
                 )}
             </div>
-
->>>>>>> cf075ab8b9261a3f05df215d88de8904a225f0af
         )
     }
 }
