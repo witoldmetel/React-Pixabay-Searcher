@@ -54,12 +54,12 @@ export default class DBResults extends Component {
     }
 
     render() {
-        console.log(this.state.db);
+        // console.log(this.state.db);
         return (
             <div>
                 {this.state.db.map(row => {
                     return (
-                            <div key={row.Id}>{row.Name}</div>
+                            <div key={row.Id_image}>{row.Name_image}</div>
                         )
                     }
                 )}

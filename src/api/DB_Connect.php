@@ -21,9 +21,10 @@ class DB_Connect extends DB{
 
         while($Fetch=$BFetch->fetch(PDO::FETCH_ASSOC)) {
             $Data[$Index] = [
-                "Id" => $Fetch['Id'],
-                "Name" => $Fetch['Name'],
-                "Category" => $Fetch['Category']
+                "Id_image" => $Fetch['Id_image'],
+                "Name_image" => $Fetch['Name_image'],
+                "Category_image" => $Fetch['Category_image'],
+                "img_url" => $Fetch['img_url']
             ];
 
             $Index++;
