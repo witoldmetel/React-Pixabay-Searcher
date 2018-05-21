@@ -19,8 +19,8 @@
 
 	 // Creating SQL query and insert the record into MySQL database table.
 	$Sql_Query = "insert into images (Id_image,Name_image,Category_image,img_url) values ('$Id_image','$Name_image','$Category_image','$img_url')";
-	 
- 
+
+
 	 if(mysqli_query($con,$Sql_Query)){
 
 			 // If the record inserted successfully then show the message as response. 
