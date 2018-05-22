@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
@@ -93,7 +92,7 @@ export default class DBResults extends Component {
     render() {
         // console.log(this.state.db);
         let imageListContent;
-        console.log(this.state.db);
+
         if(this.state.db) {
             imageListContent = (
                 <GridList cols={4}>

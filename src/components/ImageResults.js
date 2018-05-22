@@ -15,18 +15,6 @@ export default class ImageResults extends Component {
         currentImg: '',
     }
 
-    // componentDidMount() {
-    //     const { database } = this.props;
-    //     database.map(res => {
-    //         console.log(res.Id_image);
-    //         if (res.Id_image) {
-    //             this.setState({ checked: true });
-    //         } else {
-    //             this.setState({ checked: false });
-    //         }
-    //     });
-    // }
-
     handleOpen = img => {
         this.setState({ open: true, currentImg: img });
     }
@@ -35,32 +23,13 @@ export default class ImageResults extends Component {
         this.setState({ open: false, currentImg: img });
     }
 
-    // updateCheck = id => {
-    //     const { database } = this.props;
-    //     database.map(res => {
-    //         console.log(res.Id_image, id, this.state.checked);
-    //         if (res.Id_image == id) {
-    //             this.setState({ checked: true });
-    //         } else {
-    //             this.setState({ checked: false });
-    //         }
-    //     });
-    // }
+    onClickAction = (e) => {
+        console.log(e.target);
+    }
 
     render() {
         let imageListContent;
-        const { images, database } = this.props;
-
-        //DBIDs --> id image from database
-        const DBIds = database.map(db => db.Id_image);
-        const ImgIds = images.map(img => img.id);
-
-        const allExist = DBIds.some(val => {
-            console.log(val, DBIds.indexOf(val))
-            // return ImgIds.indexOf(val) > -1;
-        });
-
-        console.log(images);
+        const { images } = this.props;
 
         if(images) {
             imageListContent = (
@@ -79,6 +48,7 @@ export default class ImageResults extends Component {
                                     <Checkbox
                                         // checked={allExist ? true : false}
                                         // onCheck={() => this.updateCheck(img.id)}
+                                        onClick={this.onClickAction}
                                         checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                         uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
                                     />
