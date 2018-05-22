@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
+import { GridList, GridTile } from 'material-ui/GridList';
+import IconButton from 'material-ui/IconButton';
+import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import Checkbox from 'material-ui/Checkbox';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
 export default class DBResults extends Component {
 
@@ -12,7 +20,8 @@ export default class DBResults extends Component {
                 Name_image:'',
                 Category_image: '',
                 img_url: '',
-                Active_Loading_To_DB: false
+                Active_Loading_To_DB: false,
+                open: false
             }
     }
 
@@ -30,6 +39,14 @@ export default class DBResults extends Component {
             })
     }
 
+    handleOpen = img => {
+        this.setState({ open: true, img_url: img });
+    }
+
+    handleClose = img => {
+        this.setState({ open: false, img_url: img });
+    }
+
     insertData = () =>
     {
         this.setState({ Active_Loading_To_DB : true }, () =>
@@ -41,8 +58,8 @@ export default class DBResults extends Component {
                 method: 'POST',
                 headers:
                 {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+                    // 'Accept': 'application/json',
+                    // 'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(
                 {
@@ -75,40 +92,59 @@ export default class DBResults extends Component {
 
     render() {
         // console.log(this.state.db);
+        let imageListContent;
+        console.log(this.state.db);
+        if(this.state.db) {
+            imageListContent = (
+                <GridList cols={4}>
+                    {this.state.db.map(img => (
+                        <GridTile
+                            className = "dbresults-image"
+                            title={img.Category_image}
+                            key={img.Id_image}
+                            subtitle={
+                                <span>
+                                    by: <strong>{img.Name_image}</strong>
+                                </span>
+                            }
+                            actionIcon={
+                                <div className="action-btns">
+                                    <Checkbox
+                                        // checked={allExist ? true : false}
+                                        // onCheck={() => this.updateCheck(img.id)}
+                                        checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
+                                        uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
+                                    />
+                                    <IconButton onClick={() => this.handleOpen(img.img_url)}>
+                                        <ZoomIn color="white" />
+                                    </IconButton>
+                                </div>
+                            }
+                        >
+                            <img src={img.img_url} alt={img.Name_image}/>
+                        </GridTile>
+                    ))}
+                </GridList>
+            )
+        } else {
+            imageListContent = null;
+        }
+
+        const actions = [
+            <FlatButton label="Close" primary={true} onClick={this.handleClose} />
+        ]
+
         return (
             <div>
-                {this.state.db.map(row => {
-                    return (
-                            <div key={row.Id_image}>{row.Name_image}</div>
-                        )
-                    }
-                )}
-                <div className="container">
-                    <TextField
-                        name="Id_image"
-                        value={this.state.Id_image}
-                        onChange={this.onTextChange}
-                        floatingLabelText="add id"
-                    />
-                    <TextField
-                        name="Name_image"
-                        value={this.state.Name_image}
-                        onChange={this.onTextChange}
-                        floatingLabelText="add name"
-                    />
-                    <TextField
-                        name="Category_image"
-                        value={this.state.Category_image}
-                        onChange={this.onTextChange}
-                        floatingLabelText="add category"
-                    />
-                    <TextField
-                        name="img_url"
-                        value={this.state.img_url}
-                        onChange={this.onTextChange}
-                        floatingLabelText="add img url"
-                    />
-                </div>
+                {imageListContent}
+                <Dialog
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                >
+                    <img src={this.state.img_url} alt="" style={{ width: '100%' }}/>
+                </Dialog>
             </div>
         )
     }

@@ -10,3 +10,13 @@ body {
   justify-content: space-between;
   margin: 10px;
 }
+
+.action-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dbresults-image {
+  margin: 10px 5px;
+}

@@ -6,13 +6,22 @@ import axios from 'axios';
 
 import ImageResults from '../components/ImageResults';
 
-export default class componentName extends Component {
+export default class Search extends Component {
     state = {
         searchText: '',
         amount: 20,
         apiRootUrl: 'https://pixabay.com/api',
         apiKey: '9002807-4a05d124b2172ea760f7564cc',
-        images: []
+        images: [],
+        db: []
+    }
+
+    componentDidMount() {
+        fetch("http://localhost/React-searcher-pixabay/src/api/")
+            .then(res => res.json())
+            .then(resJSON => this.setState({
+                db: resJSON
+            }));
     }
 
     onTextChange = (e) => {
@@ -31,7 +40,7 @@ export default class componentName extends Component {
     onAmountChange = (e, index, value) => this.setState({amount: value})
 
     render() {
-        // console.log(this.state.images);
+        // console.log(this.state.images, this.state.db);
         return (
         <div>
             <div className="searcher-container">
@@ -57,8 +66,37 @@ export default class componentName extends Component {
             </SelectField>
             </div>
 
-            {this.state.images.length > 0 ? (<ImageResults images={this.state.images}/>) : null}
+            {this.state.images.length > 0 ? (<ImageResults images={this.state.images} database={this.state.db} />) : null}
         </div>
         )
     }
 }
+
+
+// <div className="container">
+//                     <TextField
+//                         name="Id_image"
+//                         value={this.state.Id_image}
+//                         onChange={this.onTextChange}
+//                         floatingLabelText="add id"
+//                     />
+//                     <TextField
+//                         name="Name_image"
+//                         value={this.state.Name_image}
+//                         onChange={this.onTextChange}
+//                         floatingLabelText="add name"
+//                     />
+//                     <TextField
+//                         name="Category_image"
+//                         value={this.state.Category_image}
+//                         onChange={this.onTextChange}
+//                         floatingLabelText="add category"
+//                     />
+//                     <TextField
+//                         name="img_url"
+//                         value={this.state.img_url}
+//                         onChange={this.onTextChange}
+//                         floatingLabelText="add img url"
+//                     />
+//                     <FlatButton onClick={this.insertData} label="Insert data to DB"/>
+//                 </div>
