@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import TextField from 'material-ui/TextField';
 
 export default class DBResults extends Component {
 
@@ -7,9 +8,11 @@ export default class DBResults extends Component {
 
         this.state = {
                 db: [],
-                id:'',
-                name:'',
-                category:''
+                Id_image: '',
+                Name_image:'',
+                Category_image: '',
+                img_url: '',
+                Active_Loading_To_DB: false
             }
     }
 
@@ -27,30 +30,47 @@ export default class DBResults extends Component {
             })
     }
 
-    addDataToDB(e) {
-        e.preventDefault();
-        console.log("Add data");
+    insertData = () =>
+    {
+        this.setState({ Active_Loading_To_DB : true }, () =>
+        {
+            const { Id_image, Name_image, Category_image, img_url } = this.state;
 
-        const { id, name, category } = this.state;
+            fetch('http://localhost/React-searcher-pixabay/src/api/DB_Add.php',
+            {
+                method: 'POST',
+                headers:
+                {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                {
+                    Id_image: Id_image,
+                    Name_image: Name_image,
+                    Category_image: Category_image,
+                    img_url: img_url
+                })
 
-        fetch('http://localhost/React-searcher-pixabay/src/api/DB_Add.php', {
-			method: 'post',
-			header:{
-				// 'Accept': 'application/json',
-				// 'Content-type': 'application/json'
-			},
-			body:JSON.stringify({
-				id: id,
-				name: name,
-				category: category,
-			})
+            })
+            .then(res => res.json())
+            .then(resJSON =>
+            {
+                alert(resJSON);
+                this.setState({ Active_Loading_To_DB : false });
 
-		})
-		.then(res => res.json())
-			.then(resJSON =>{
-				console.log(resJSON);
-			})
-			.catch(error => console.error(error));
+            }).catch(error =>
+            {
+                console.error(error);
+                this.setState({ Active_Loading_To_DB : false});
+            });
+        });
+    }
+
+    onTextChange = (e) => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+        console.log(name, value);
     }
 
     render() {
@@ -63,6 +83,32 @@ export default class DBResults extends Component {
                         )
                     }
                 )}
+                <div className="container">
+                    <TextField
+                        name="Id_image"
+                        value={this.state.Id_image}
+                        onChange={this.onTextChange}
+                        floatingLabelText="add id"
+                    />
+                    <TextField
+                        name="Name_image"
+                        value={this.state.Name_image}
+                        onChange={this.onTextChange}
+                        floatingLabelText="add name"
+                    />
+                    <TextField
+                        name="Category_image"
+                        value={this.state.Category_image}
+                        onChange={this.onTextChange}
+                        floatingLabelText="add category"
+                    />
+                    <TextField
+                        name="img_url"
+                        value={this.state.img_url}
+                        onChange={this.onTextChange}
+                        floatingLabelText="add img url"
+                    />
+                </div>
             </div>
         )
     }
