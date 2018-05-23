@@ -19,20 +19,28 @@ export default class Image extends Component {
         Category_image: '',
         img_url: '',
         Active_Loading_To_DB: false,
-        openSnackBar: false
+        openSnackBar: false,
+        openAlertDialog: false
     }
 
     handleOpen = img => {
-        this.setState({ open: true, currentImg: img });
+        this.setState({
+            open: true,
+            currentImg: img
+        });
     }
 
     handleClose = img => {
-        this.setState({ open: false, currentImg: img });
+        this.setState({
+            open: false,
+            currentImg: img,
+            openAlertDialog: false
+        });
     }
 
     insertData = (img) =>
     {
-        console.log(img);
+        // console.log(img);
         this.setState({ Active_Loading_To_DB : true }, () =>
         {
             fetch('http://localhost/React-searcher-pixabay/src/api/DB_Add.php',
@@ -61,8 +69,11 @@ export default class Image extends Component {
                 });
             }).catch(error =>
             {
-                console.error(error);
-                this.setState({ Active_Loading_To_DB : false});
+                // console.error(error);
+                this.setState({
+                    Active_Loading_To_DB : false,
+                    openAlertDialog: true
+                });
             });
         });
     }
@@ -127,8 +138,16 @@ export default class Image extends Component {
                     message="Picture added to your favourites"
                     autoHideDuration={4000}
                 />
+                <Dialog
+                    actions={actions}
+                    modal={false}
+                    open={this.state.openAlertDialog}
+                    onRequestClose={this.handleClose}
+                    contentStyle={{maxWidth: '40%'}}
+                >
+                    This picture is already in your favourites!
+                </Dialog>
             </div>
-
         )
     }
 }
