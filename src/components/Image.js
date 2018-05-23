@@ -8,11 +8,18 @@ import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class Image extends Component {
     state = {
         open: false,
         currentImg: '',
+        Id_image: '',
+        Name_image: '',
+        Category_image: '',
+        img_url: '',
+        Active_Loading_To_DB: false,
+        openSnackBar: false
     }
 
     handleOpen = img => {
@@ -23,8 +30,41 @@ export default class Image extends Component {
         this.setState({ open: false, currentImg: img });
     }
 
-    onClickAction = (img) => {
+    insertData = (img) =>
+    {
         console.log(img);
+        this.setState({ Active_Loading_To_DB : true }, () =>
+        {
+            fetch('http://localhost/React-searcher-pixabay/src/api/DB_Add.php',
+            {
+                method: 'POST',
+                headers:
+                {
+                    // 'Accept': 'application/json',
+                    // 'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                {
+                    Id_image: img.id,
+                    Name_image: img.user,
+                    Category_image: img.tags,
+                    img_url: img.largeImageURL
+                })
+
+            })
+            .then(res => res.json())
+            .then(resJSON =>
+            {
+                this.setState({
+                    Active_Loading_To_DB: false,
+                    openSnackBar: true
+                });
+            }).catch(error =>
+            {
+                console.error(error);
+                this.setState({ Active_Loading_To_DB : false});
+            });
+        });
     }
 
     render() {
@@ -48,7 +88,7 @@ export default class Image extends Component {
                                 <Checkbox
                                     // checked={allExist ? true : false}
                                     // onCheck={() => this.updateCheck(img.id)}
-                                    onClick={() => this.onClickAction(img)}
+                                    onClick={() => this.insertData(img)}
                                     checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                     uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
                                 />
@@ -82,7 +122,13 @@ export default class Image extends Component {
                 >
                     <img src={this.state.currentImg} alt="" style={{ width: '100%' }}/>
                 </Dialog>
+                <Snackbar
+                    open={this.state.openSnackBar}
+                    message="Picture added to your favourites"
+                    autoHideDuration={4000}
+                />
             </div>
+
         )
     }
 }
