@@ -20,7 +20,8 @@ export default class Image extends Component {
         img_url: '',
         Active_Loading_To_DB: false,
         openSnackBar: false,
-        openAlertDialog: false
+        openAlertDialog: false,
+        checked: false
     }
 
     handleOpen = img => {
@@ -99,6 +100,14 @@ export default class Image extends Component {
 
     }
 
+    updateCheck(checked, img) {
+        if (checked) {
+            this.removeData(img.id);
+        } else {
+            this.insertData(img);
+        }
+    }
+
     render() {
         let imageListContent;
         const { images, database } = this.props;
@@ -120,7 +129,7 @@ export default class Image extends Component {
                             <div className="action-btns">
                                 <Checkbox
                                     checked={db_ids.includes(img.id) ? true : false}
-                                    onClick={() => this.insertData(img)}
+                                    onClick={() => this.updateCheck(db_ids.includes(img.id), img)}
                                     checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                     uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
                                 />
