@@ -78,6 +78,32 @@ export default class Image extends Component {
         });
     }
 
+    removeData = (Id_image) => {
+
+          fetch('http://localhost/React-searcher-pixabay/src/api/DB_Delete.php', {
+          method: 'POST',
+          headers: {
+            // 'Accept': 'application/json',
+            // 'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+        
+            Id_image: Id_image
+
+          })
+        
+          }).then(res => res.json())
+          .then(resJSON => {
+        
+            // Showing response message coming from server after inserting records.
+            console.log(resJSON);
+
+          }).catch((error) => {
+             console.error(error);
+          });
+
+      }
+
     render() {
         let imageListContent;
         const { images } = this.props;
@@ -105,6 +131,9 @@ export default class Image extends Component {
                                 />
                                 <IconButton onClick={() => this.handleOpen(img.largeImageURL)}>
                                     <ZoomIn color="white" />
+                                </IconButton>
+                                <IconButton onClick={() => this.removeData(img.id)}>
+                                    <ZoomIn color="green" />
                                 </IconButton>
                             </div>
                         }
