@@ -18,11 +18,11 @@
     // Creating SQL query and Updating the current record into MySQL database table.
     $Sql_Query = "DELETE FROM images WHERE Id_image = '$Id_image'" ;
 
-    
+
     if(mysqli_query($con,$Sql_Query)){
 
     // If the record inserted successfully then show the message.
-    $MSG = 'Record Deleted Successfully.' ;
+    $MSG = 'Record Deleted Successfully.';
 
     // Converting the message into JSON format.
     $json = json_encode($MSG);
