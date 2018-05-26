@@ -97,18 +97,12 @@ export default class Image extends Component {
              console.error(error);
           });
 
-      }
+    }
 
     render() {
         let imageListContent;
         const { images, database } = this.props;
-        const db_id = database.map(db => Number(db.Id_image));
-        const img_id = images.map(img => img.id);
-        // console.log(db_id,img_id);
-
-        let checkNumber = img_id.some(nr => {
-            db_id.includes(nr);
-        });
+        const db_ids = database.map(db => Number(db.Id_image)); // ids from database
 
         if(images) {
         imageListContent = (
@@ -125,8 +119,7 @@ export default class Image extends Component {
                         actionIcon={
                             <div className="action-btns">
                                 <Checkbox
-                                    checked={checkNumber ? true : false}
-                                    // onCheck={() => this.updateCheck(img.id)}
+                                    checked={db_ids.includes(img.id) ? true : false}
                                     onClick={() => this.insertData(img)}
                                     checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                     uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
