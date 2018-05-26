@@ -87,17 +87,12 @@ export default class Image extends Component {
             // 'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-        
             Id_image: Id_image
-
           })
-        
           }).then(res => res.json())
           .then(resJSON => {
-        
             // Showing response message coming from server after inserting records.
             console.log(resJSON);
-
           }).catch((error) => {
              console.error(error);
           });
@@ -106,7 +101,14 @@ export default class Image extends Component {
 
     render() {
         let imageListContent;
-        const { images } = this.props;
+        const { images, database } = this.props;
+        const db_id = database.map(db => Number(db.Id_image));
+        const img_id = images.map(img => img.id);
+        // console.log(db_id,img_id);
+
+        let checkNumber = img_id.some(nr => {
+            db_id.includes(nr);
+        });
 
         if(images) {
         imageListContent = (
@@ -123,7 +125,7 @@ export default class Image extends Component {
                         actionIcon={
                             <div className="action-btns">
                                 <Checkbox
-                                    // checked={allExist ? true : false}
+                                    checked={checkNumber ? true : false}
                                     // onCheck={() => this.updateCheck(img.id)}
                                     onClick={() => this.insertData(img)}
                                     checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
@@ -131,9 +133,6 @@ export default class Image extends Component {
                                 />
                                 <IconButton onClick={() => this.handleOpen(img.largeImageURL)}>
                                     <ZoomIn color="white" />
-                                </IconButton>
-                                <IconButton onClick={() => this.removeData(img.id)}>
-                                    <ZoomIn color="green" />
                                 </IconButton>
                             </div>
                         }
