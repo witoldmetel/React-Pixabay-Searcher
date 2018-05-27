@@ -46,6 +46,29 @@ export default class DBResults extends Component {
         this.setState({ open: false, img_url: img });
     }
 
+    removeData = (Id_image) =>
+    {
+        fetch('http://localhost/React-searcher-pixabay/src/api/DB_Delete.php', {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                // 'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    Id_image: Id_image
+                }
+            )})
+            .then(res => res.json())
+            .then(resJSON => {
+                // console.log(resJSON);
+                this.displayData();
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
     render() {
         // console.log(this.state.db);
         let imageListContent;
@@ -67,6 +90,7 @@ export default class DBResults extends Component {
                                 <div className="action-btns">
                                     <Checkbox
                                         checked={img.Id_image ? true : false}
+                                        onClick={() => this.removeData(img.Id_image)}
                                         checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                         uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
                                     />
@@ -91,6 +115,7 @@ export default class DBResults extends Component {
 
         return (
             <div>
+                <h1 >Favourites</h1>
                 {imageListContent}
                 <Dialog
                     actions={actions}

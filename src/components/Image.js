@@ -68,7 +68,8 @@ class Image extends Component {
                     Active_Loading_To_DB: false,
                     openSnackBar: true
                 });
-                this.props.history.push('/dbresults');
+                setTimeout(() => this.props.history.push('/dbresults'), 1500);
+
             }).catch(error =>
             {
                 // console.error(error);
@@ -78,36 +79,6 @@ class Image extends Component {
                 });
             });
         });
-    }
-
-    removeData = (Id_image) =>
-    {
-        fetch('http://localhost/React-searcher-pixabay/src/api/DB_Delete.php', {
-            method: 'POST',
-            headers: {
-                // 'Accept': 'application/json',
-                // 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(
-                {
-                    Id_image: Id_image
-                }
-            )})
-            .then(res => res.json())
-            .then(resJSON => {
-                console.log(resJSON);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-
-    updateCheck(checked, img) {
-        if (checked) {
-            this.removeData(img.id);
-        } else {
-            this.insertData(img);
-        }
     }
 
     render() {
@@ -131,7 +102,7 @@ class Image extends Component {
                             <div className="action-btns">
                                 <Checkbox
                                     checked={db_ids.includes(img.id) ? true : false}
-                                    onClick={() => this.updateCheck(db_ids.includes(img.id), img)}
+                                    onClick={() => this.insertData(img)}
                                     checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                     uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
                                 />
