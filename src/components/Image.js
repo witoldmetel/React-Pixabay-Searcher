@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
@@ -10,7 +11,7 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Snackbar from 'material-ui/Snackbar';
 
-export default class Image extends Component {
+class Image extends Component {
     state = {
         open: false,
         currentImg: '',
@@ -20,8 +21,7 @@ export default class Image extends Component {
         img_url: '',
         Active_Loading_To_DB: false,
         openSnackBar: false,
-        openAlertDialog: false,
-        checked: false
+        openAlertDialog: false
     }
 
     handleOpen = img => {
@@ -68,6 +68,7 @@ export default class Image extends Component {
                     Active_Loading_To_DB: false,
                     openSnackBar: true
                 });
+                this.props.history.push('/dbresults');
             }).catch(error =>
             {
                 // console.error(error);
@@ -79,25 +80,26 @@ export default class Image extends Component {
         });
     }
 
-    removeData = (Id_image) => {
-
-          fetch('http://localhost/React-searcher-pixabay/src/api/DB_Delete.php', {
-          method: 'POST',
-          headers: {
-            // 'Accept': 'application/json',
-            // 'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            Id_image: Id_image
-          })
-          }).then(res => res.json())
-          .then(resJSON => {
-            // Showing response message coming from server after inserting records.
-            console.log(resJSON);
-          }).catch((error) => {
-             console.error(error);
-          });
-
+    removeData = (Id_image) =>
+    {
+        fetch('http://localhost/React-searcher-pixabay/src/api/DB_Delete.php', {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                // 'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    Id_image: Id_image
+                }
+            )})
+            .then(res => res.json())
+            .then(resJSON => {
+                console.log(resJSON);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     updateCheck(checked, img) {
@@ -185,3 +187,5 @@ export default class Image extends Component {
 Image.propTypes = {
     images: PropTypes.array.isRequired
 }
+
+export default withRouter(Image);

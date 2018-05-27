@@ -46,49 +46,6 @@ export default class DBResults extends Component {
         this.setState({ open: false, img_url: img });
     }
 
-    insertData = () =>
-    {
-        this.setState({ Active_Loading_To_DB : true }, () =>
-        {
-            const { Id_image, Name_image, Category_image, img_url } = this.state;
-
-            fetch('http://localhost/React-searcher-pixabay/src/api/DB_Add.php',
-            {
-                method: 'POST',
-                headers:
-                {
-                    // 'Accept': 'application/json',
-                    // 'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(
-                {
-                    Id_image: Id_image,
-                    Name_image: Name_image,
-                    Category_image: Category_image,
-                    img_url: img_url
-                })
-
-            })
-            .then(res => res.json())
-            .then(resJSON =>
-            {
-                alert(resJSON);
-                this.setState({ Active_Loading_To_DB : false });
-
-            }).catch(error =>
-            {
-                console.error(error);
-                this.setState({ Active_Loading_To_DB : false});
-            });
-        });
-    }
-
-    onTextChange = (e) => {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-        console.log(name, value);
-    }
-
     render() {
         // console.log(this.state.db);
         let imageListContent;
@@ -109,8 +66,7 @@ export default class DBResults extends Component {
                             actionIcon={
                                 <div className="action-btns">
                                     <Checkbox
-                                        // checked={allExist ? true : false}
-                                        // onCheck={() => this.updateCheck(img.id)}
+                                        checked={img.Id_image ? true : false}
                                         checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                         uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
                                     />
