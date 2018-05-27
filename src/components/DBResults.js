@@ -119,7 +119,7 @@ export default class DBResults extends Component {
 
         return (
             <div>
-                <h1>My Favourites</h1>
+                <h1 style={{textAlign: 'center', color: 'rgb(0,188,212)'}}>My Favourites</h1>
                 {imageListContent}
                 <Dialog
                     actions={actions}
