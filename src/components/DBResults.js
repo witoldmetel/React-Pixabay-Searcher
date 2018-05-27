@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class DBResults extends Component {
 
@@ -19,8 +20,8 @@ export default class DBResults extends Component {
                 Name_image:'',
                 Category_image: '',
                 img_url: '',
-                Active_Loading_To_DB: false,
-                open: false
+                open: false,
+                openSnackBar: false
             }
     }
 
@@ -63,6 +64,9 @@ export default class DBResults extends Component {
             .then(resJSON => {
                 // console.log(resJSON);
                 this.displayData();
+                this.setState({
+                    openSnackBar: true
+                });
             })
             .catch(error => {
                 console.error(error);
@@ -75,7 +79,7 @@ export default class DBResults extends Component {
 
         if(this.state.db) {
             imageListContent = (
-                <GridList cols={4}>
+                <GridList cols={4} style={{margin: "0px"}}>
                     {this.state.db.map(img => (
                         <GridTile
                             className = "dbresults-image"
@@ -125,6 +129,11 @@ export default class DBResults extends Component {
                 >
                     <img src={this.state.img_url} alt="" style={{ width: '100%' }}/>
                 </Dialog>
+                <Snackbar
+                    open={this.state.openSnackBar}
+                    message="Picture removed from your favourites"
+                    autoHideDuration={3000}
+                />
             </div>
         )
     }

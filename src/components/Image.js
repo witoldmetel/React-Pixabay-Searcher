@@ -19,9 +19,9 @@ class Image extends Component {
         Name_image: '',
         Category_image: '',
         img_url: '',
-        Active_Loading_To_DB: false,
         openSnackBar: false,
-        openAlertDialog: false
+        openAlertDialog: false,
+        disableAdd: false
     }
 
     handleOpen = img => {
@@ -42,7 +42,7 @@ class Image extends Component {
     insertData = (img) =>
     {
         // console.log(img);
-        this.setState({ Active_Loading_To_DB : true }, () =>
+        this.setState(() =>
         {
             fetch('http://localhost/React-searcher-pixabay/src/api/DB_Add.php',
             {
@@ -65,8 +65,8 @@ class Image extends Component {
             .then(resJSON =>
             {
                 this.setState({
-                    Active_Loading_To_DB: false,
-                    openSnackBar: true
+                    openSnackBar: true,
+                    disableAdd: true
                 });
                 setTimeout(() => this.props.history.push('/dbresults'), 1500);
 
@@ -74,7 +74,6 @@ class Image extends Component {
             {
                 // console.error(error);
                 this.setState({
-                    Active_Loading_To_DB : false,
                     openAlertDialog: true
                 });
             });
@@ -88,7 +87,7 @@ class Image extends Component {
 
         if(images) {
         imageListContent = (
-            <GridList cols={4}>
+            <GridList cols={4} style={{margin: "0px"}}>
                 {images.map(img => (
                     <GridTile
                         title={img.tags}
@@ -103,6 +102,7 @@ class Image extends Component {
                                 <Checkbox
                                     checked={db_ids.includes(img.id) ? true : false}
                                     onClick={() => this.insertData(img)}
+                                    disabled={this.state.disableAdd ? true : false}
                                     checkedIcon={<ActionFavorite style={{fill: 'red'}}/>}
                                     uncheckedIcon={<ActionFavoriteBorder style={{fill: 'red'}} />}
                                 />
@@ -139,7 +139,7 @@ class Image extends Component {
                 <Snackbar
                     open={this.state.openSnackBar}
                     message="Picture added to your favourites"
-                    autoHideDuration={4000}
+                    autoHideDuration={1500}
                 />
                 <Dialog
                     actions={actions}
