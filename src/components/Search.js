@@ -50,20 +50,20 @@ export default class Search extends Component {
                 onChange={this.onTextChange}
                 floatingLabelText="Search For Images"
                 fullWidth={true}
-            />
-            <hr/>
-            <SelectField
-                name="amount"
-                floatingLabelText="Amount"
-                value={this.state.amount}
-                onChange={this.onAmountChange}
-                >
-                <MenuItem value={5} primaryText="5" />
-                <MenuItem value={10} primaryText="10" />
-                <MenuItem value={20} primaryText="20" />
-                <MenuItem value={35} primaryText="35" />
-                <MenuItem value={50} primaryText="50" />
-            </SelectField>
+                />
+                <hr/>
+                <SelectField
+                    name="amount"
+                    floatingLabelText="Amount"
+                    value={this.state.amount}
+                    onChange={this.onAmountChange}
+                    >
+                    <MenuItem value={5} primaryText="5" />
+                    <MenuItem value={10} primaryText="10" />
+                    <MenuItem value={20} primaryText="20" />
+                    <MenuItem value={35} primaryText="35" />
+                    <MenuItem value={50} primaryText="50" />
+                </SelectField>
             </div>
 
             {this.state.images.length > 0 ? (<ImageResults images={this.state.images} database={this.state.db} />) : null}
@@ -71,32 +71,3 @@ export default class Search extends Component {
         )
     }
 }
-
-
-// <div className="container">
-//                     <TextField
-//                         name="Id_image"
-//                         value={this.state.Id_image}
-//                         onChange={this.onTextChange}
-//                         floatingLabelText="add id"
-//                     />
-//                     <TextField
-//                         name="Name_image"
-//                         value={this.state.Name_image}
-//                         onChange={this.onTextChange}
-//                         floatingLabelText="add name"
-//                     />
-//                     <TextField
-//                         name="Category_image"
-//                         value={this.state.Category_image}
-//                         onChange={this.onTextChange}
-//                         floatingLabelText="add category"
-//                     />
-//                     <TextField
-//                         name="img_url"
-//                         value={this.state.img_url}
-//                         onChange={this.onTextChange}
-//                         floatingLabelText="add img url"
-//                     />
-//                     <FlatButton onClick={this.insertData} label="Insert data to DB"/>
-//                 </div>

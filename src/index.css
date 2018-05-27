@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+.nav-right-btns {
+  margin-top: 6px;
+}
+
 .searcher-container {
   display: flex;
   align-items: center;

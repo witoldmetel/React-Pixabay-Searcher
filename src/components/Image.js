@@ -139,7 +139,7 @@ class Image extends Component {
                 <Snackbar
                     open={this.state.openSnackBar}
                     message="Picture added to your favourites"
-                    autoHideDuration={1500}
+                    autoHideDuration={1000}
                 />
                 <Dialog
                     actions={actions}
