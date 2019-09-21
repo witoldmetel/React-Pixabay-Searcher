@@ -21,11 +21,10 @@ body {
   justify-content: space-between;
 }
 
-.action-btns>div>input[type="checkbox"]+div>div {
+.action-btns > div > input[type="checkbox"] + div > div {
   margin-right: 0 !important;
 }
 
 .dbresults-image {
   margin: 8px 3px;
 }
-
